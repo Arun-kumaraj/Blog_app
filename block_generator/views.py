@@ -12,10 +12,10 @@ import google.generativeai as genai
 import assemblyai as aai
 from django.conf import settings
 from .models import BlogPost
-
-
+from dotenv import load_dotenv
+load_dotenv()
 # Configure Google Gemini API
-genai.configure(api_key="AIzaSyABOX8qgg70n86on1eEj1slda_4lPPTcXY")
+genai.configure(api_key=os.getenv('API_key_gai'))
 
 @login_required
 def index(request):
@@ -93,7 +93,7 @@ def get_transcription(link):
     audio_file = download_audio(link)
 
     # Set your AssemblyAI API key here
-    aai.settings.api_key = "87fb90b7d6224e688d481ec505dec0aa"
+    aai.settings.api_key = os.getenv('API_key_ai')
 
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(audio_file)
